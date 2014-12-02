@@ -2,7 +2,7 @@ describe 'Manipulando Pessoas', type: :feature do
 
   require 'myfinance'
 
-  it 'deve achar o id pelo cnpj' do
+  it 'deve poder criar um cliente e achar o seu id pelo cnpj' do
     Myfinance.setup('2acecbb483842ebbfb2c638070bf019b70e757190166d277')
     cliente = {
         'address'=>'Rua Tal, número 0',
@@ -22,11 +22,10 @@ describe 'Manipulando Pessoas', type: :feature do
         'zip_code'=>'22290-080'
     }
     novo_cliente = Myfinance.cria_pessoa(cliente)
-    puts novo_cliente.inspect
+    novo_cliente['name'].should_not be_nil
 
-    # id = Myfinance.pessoa_id(cliente['person']['federation_subscription_number'])
-    # puts id
-
+    id = Myfinance.pessoa_id(cliente['federation_subscription_number'])
+    id.should_not be_nil
 
   end
 

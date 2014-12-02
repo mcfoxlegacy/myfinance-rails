@@ -19,11 +19,8 @@ module Myfinance
 
   def self.pessoa_id(cnpj)
     mid = nil
-    all_people = lget '/people.json'
-    puts all_people.inspect
-
-
-    all_people.each do | people |
+    response = lget '/people.json'
+    response.each do | people |
       cliente = people['person']
       if cliente['federation_subscription_number_only_numbers'] == cnpj  or cliente['federation_subscription_number'] == cnpj
         mid = cliente['id']
@@ -36,18 +33,13 @@ module Myfinance
   def self.pessoa(cnpj)
     mid = pessoa_id(cnpj)
     response = lget "/people/#{mid}.json"
-    response['person']
+    response['parsed_response']['person']
   end
 
   def self.cria_pessoa( pessoa )
-    cnpj = pessoa['federation_subscription_number_only_numbers']
-    id = pessoa_id(cnpj)
+    # Vou rezar para que de certo
     people = { 'person' => pessoa }
-    if id
-      people['person']['id'] = id
-    end
-    response = lpost '/people.json', people
-    response['person']
+    lpost '/people.json', people
   end
 
   private
