@@ -22,10 +22,13 @@ describe 'Manipulando Pessoas', type: :feature do
         'zip_code'=>'22290-080'
     }
     novo_cliente = Myfinance.cria_pessoa(cliente)
-    novo_cliente['name'].should_not be_nil
+    expect(novo_cliente['name']).to_not be_nil
 
     id = Myfinance.pessoa_id(cliente['federation_subscription_number'])
-    id.should_not be_nil
+    puts id
+    expect(id).to_not be_nil
+
+
 
   end
 
