@@ -25,7 +25,6 @@ describe 'Manipulando Pessoas', type: :feature do
     expect(novo_cliente['name']).to_not be_nil
 
     id = Myfinance.pessoa_id(cliente['federation_subscription_number'])
-    puts id
     expect(id).to_not be_nil
 
 
