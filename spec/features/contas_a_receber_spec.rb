@@ -2,6 +2,14 @@ describe 'Manipulando Contas a Receber', type: :feature do
 
   require 'myfinance'
 
+  it 'Se a cav não der acesso, ja devemos dar erro na chamado do setup' do
+    expect { Myfinance.setup('nowaythiskeucanwork') }.to raise_error
+  end
+
+  it 'Se a cav não der acesso, ja devemos dar erro na chamado do setup' do
+    expect { Myfinance.setup('2acecbb483842ebbfb2c638070bf019b70e757190166d277') }.to_not raise_error
+  end
+
   it 'deve poder criar uma conta a receber para uma entidade e um cliente' do
     Myfinance.setup('2acecbb483842ebbfb2c638070bf019b70e757190166d277')
 
@@ -47,12 +55,9 @@ describe 'Manipulando Contas a Receber', type: :feature do
       }
     conta_a_receber = Myfinance.cria_conta_a_receber('Minhas Finanças',faturamento)
     expect(conta_a_receber['id']).to_not be_nil
-
   end
 
-  it 'Se a cav não der acesso, ja devemos dar erro na chamado do setup' do
-    expect { Myfinance.setup('nowaythiskeucanwork') }.to raise_error
-  end
+
 
 
 end

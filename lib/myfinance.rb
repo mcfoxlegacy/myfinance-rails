@@ -6,6 +6,7 @@ require 'myfinance/conta_a_receber'
 require 'myfinance/imposto'
 require 'myfinance/categoria'
 require 'myfinance/centro_receita_custo'
+require 'json'
 
 module Myfinance
 
@@ -24,8 +25,8 @@ module Myfinance
     # testo com uma chamada simples
     response = lget('/entities.json')
     # Resposta deve ser um array de hashes
-    unless response.is_a?(Array)
-      raise "Erro ao inicializar a API do MyFinance: #{response}"
+    unless response.code == 200
+      raise "Erro ao inicializar a API do MyFinance: #{response.code} : #{response.parsed_response}"
     end
   end
 
@@ -38,13 +39,23 @@ module Myfinance
     get url, options
   end
 
-  def self.lpost(url,data)
+  def self.lpost(url,post_data)
     options = {
         :basic_auth => {:username => @token, :password => 'x'},
-        :body => data.to_json,
+        :body => post_data.to_json,
         :headers => { 'Content-Type' => 'application/json' }
     }
     response = post url, options
+    response
+  end
+
+  def self.lput(url,post_data)
+    options = {
+        :basic_auth => {:username => @token, :password => 'x'},
+        :body => post_data.to_json,
+        :headers => { 'Content-Type' => 'application/json' }
+    }
+    response = put url, options
     response
   end
 

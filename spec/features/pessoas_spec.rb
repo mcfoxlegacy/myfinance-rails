@@ -22,10 +22,19 @@ describe 'Manipulando Pessoas', type: :feature do
         'zip_code'=>'22290-080'
     }
     novo_cliente = Myfinance.cria_pessoa(cliente)
-    expect(novo_cliente['name']).to_not be_nil
+    expect(novo_cliente['federation_subscription_number']).to_not be_nil
 
     id = Myfinance.pessoa_id(cliente['federation_subscription_number'])
     expect(id).to_not be_nil
+
+    cliente['name'] = 'Ciclano'
+    response = Myfinance.atualiza_pessoa(id, cliente)
+    expect(response.code).to equal(200)
+
+    mesmo_cliente = Myfinance.pessoa(cliente['federation_subscription_number'])
+    expect(mesmo_cliente).to_not be_nil
+    expect(mesmo_cliente['name']).to eq('Ciclano')
+
   end
 
   it 'Se procurar por um cnpj não cadastrado, deve voltar nulo' do
@@ -33,6 +42,7 @@ describe 'Manipulando Pessoas', type: :feature do
     id = Myfinance.pessoa_id('67977504000137')
     expect(id).to be_nil
   end
+
 
 
 end

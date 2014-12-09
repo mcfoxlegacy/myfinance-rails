@@ -16,7 +16,7 @@ module Myfinance
   def self.pessoa(cnpj)
     mid = pessoa_id(cnpj)
     response = lget "/people/#{mid}.json"
-    response['parsed_response']['person']
+    response['person'] if response
   end
 
   def self.cria_pessoa( pessoa )
@@ -24,6 +24,14 @@ module Myfinance
     people = { 'person' => pessoa }
     lpost '/people.json', people
   end
+
+  def self.atualiza_pessoa( people_id, pessoa )
+    # Vou rezar para que de certo
+    # people = { 'person' => pessoa }
+    lput "/people/#{people_id}.json", pessoa
+  end
+
+
 
 end
 
