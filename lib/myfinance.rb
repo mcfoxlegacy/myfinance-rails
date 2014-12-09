@@ -21,6 +21,12 @@ module Myfinance
     end
     base_uri @endpoint
     @token = token
+    # testo com uma chamada simples
+    response = lget('/entities.json')
+    # Resposta deve ser um array de hashes
+    unless response.is_a?(Array)
+      raise "Erro ao inicializar a API do MyFinance: #{response}"
+    end
   end
 
   private

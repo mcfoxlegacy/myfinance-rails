@@ -26,9 +26,12 @@ describe 'Manipulando Pessoas', type: :feature do
 
     id = Myfinance.pessoa_id(cliente['federation_subscription_number'])
     expect(id).to_not be_nil
+  end
 
-
-
+  it 'Se procurar por um cnpj não cadastrado, deve voltar nulo' do
+    Myfinance.setup('2acecbb483842ebbfb2c638070bf019b70e757190166d277')
+    id = Myfinance.pessoa_id('67977504000137')
+    expect(id).to be_nil
   end
 
 
