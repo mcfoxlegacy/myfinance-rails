@@ -5,7 +5,7 @@ module Myfinance
     response = lget '/entities.json'
     response.each do | ent |
       cliente = ent['entity']
-      if cliente['name'] == nome
+      if cliente['name'] == nome or cliente['federation_subscription_number'] == nome
         mid = cliente['id']
         break
       end
