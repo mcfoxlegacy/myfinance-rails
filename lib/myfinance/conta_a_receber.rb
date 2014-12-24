@@ -6,7 +6,7 @@ module Myfinance
         'receivable_account' => faturamento
     }
     response = lpost "/entities/#{entity_id}/receivable_accounts.json", receivable_account
-    response['receivable_account']
+    response
   end
 
 

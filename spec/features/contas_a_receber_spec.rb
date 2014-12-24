@@ -54,7 +54,7 @@ describe 'Manipulando Contas a Receber', type: :feature do
         ]
       }
     conta_a_receber = Myfinance.cria_conta_a_receber('Minhas Finanças',faturamento)
-    expect(conta_a_receber['id']).to_not be_nil
+    expect(conta_a_receber['receivable_account']).to_not be_nil
   end
 
 

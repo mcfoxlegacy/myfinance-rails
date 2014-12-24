@@ -6,7 +6,7 @@ module Myfinance
         'payable_account' => pagamento
     }
     response = lpost "/entities/#{entity_id}/payable_accounts.json", payable_account
-    response['payable_account']
+    response
   end
 
 end
