@@ -16,5 +16,9 @@ describe 'Manipulando Pessoas', type: :feature do
     expect(centro_de_receita_id).to be_nil
   end
 
-
+  it '#categorias' do
+    double categorias_double = double('categorias_double')
+    expect(Myfinance).to receive(:lget).once.with('/categories.json').and_return categorias_double
+    expect(Myfinance.categorias).to eql(categorias_double)
+  end
 end

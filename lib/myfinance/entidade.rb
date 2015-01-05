@@ -2,8 +2,7 @@ module Myfinance
 
   def self.entidade_id(nome)
     mid = nil
-    response = lget '/entities.json'
-    response.each do | ent |
+    entidades.each do | ent |
       cliente = ent['entity']
       if cliente['name'] == nome or cliente['federation_subscription_number'] == nome
         mid = cliente['id']
@@ -19,6 +18,8 @@ module Myfinance
     response['entity']
   end
 
-
+  def self.entidades
+    lget '/entities.json'
+  end
 end
 

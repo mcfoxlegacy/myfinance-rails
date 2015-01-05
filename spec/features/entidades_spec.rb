@@ -17,4 +17,9 @@ describe 'Manipulando Entidades', type: :feature do
     expect(entidade['deleted_at']).to be_nil
   end
 
+  it '#entidades' do
+    double entidades_double = double('entidades_double')
+    expect(Myfinance).to receive(:lget).once.with('/entities.json').and_return entidades_double
+    expect(Myfinance.entidades).to eql(entidades_double)
+  end
 end
