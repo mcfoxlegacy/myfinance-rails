@@ -13,6 +13,10 @@ module Myfinance
     response
   end
 
+  def self.conta_a_receber(id, entity_id)
+    lget "/entities/#{entity_id}/receivable_accounts/#{id}.json"
+  end
+
 
 end
 

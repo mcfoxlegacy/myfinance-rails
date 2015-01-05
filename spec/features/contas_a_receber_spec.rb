@@ -63,7 +63,9 @@ describe 'Manipulando Contas a Receber', type: :feature do
     expect(conta_a_receber['receivable_account']).to_not be_nil
   end
 
-
-
-
+  it '#conta_a_receber' do
+    double conta_a_receber_double = double('conta_a_receber_double')
+    expect(Myfinance).to receive(:lget).once.with("/entities/2/receivable_accounts/1.json").and_return conta_a_receber_double
+    expect(Myfinance.conta_a_receber(1,2)).to eql(conta_a_receber_double)
+  end
 end
