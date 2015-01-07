@@ -33,6 +33,7 @@ module Myfinance
 
   def self.cria_pessoa( pessoa )
     # Vou rezar para que de certo
+    @everyone = nil
     people = { 'person' => pessoa }
     lpost '/people.json', people
   end
@@ -40,6 +41,7 @@ module Myfinance
   def self.atualiza_pessoa( people_id, pessoa )
     # Vou rezar para que de certo
     # people = { 'person' => pessoa }
+    @everyone = nil
     lput "/people/#{people_id}.json", pessoa
   end
 
