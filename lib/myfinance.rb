@@ -65,6 +65,16 @@ module Myfinance
     response
   end
 
+  def self.ldelete(url)
+    options = {
+        :basic_auth => {:username => @token, :password => 'x'},
+        :headers => { 'Content-Type' => 'application/json' }
+    }
+    add_account_id options
+    response = delete url, options
+    response
+  end
+
   def self.format_time(dt)
     dt.strftime('%FT%H:%MZ') rescue nil
   end
