@@ -17,6 +17,11 @@ module Myfinance
     lget "/entities/#{entity_id}/receivable_accounts/#{id}.json"
   end
 
+  def self.apaga_conta_a_receber(id, entity_id)
+    ldelete "/entities/#{entity_id}/receivable_accounts/#{id}.json"
+  end
 
+  def self.altera_conta_a_receber(id, entity_id, faturamento)
+    lput "/entities/#{entity_id}/receivable_accounts/#{id}.json", faturamento
+  end
 end
-
