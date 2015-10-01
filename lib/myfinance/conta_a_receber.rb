@@ -28,7 +28,7 @@ module Myfinance
     lput "/entities/#{entity_id}/receivable_accounts/#{id}/receive.json", faturamento
   end
 
-  def self.desfaz_recebimento_de_conta_a_receber(id, entity_id, faturamento)
-    lput "/entities/#{entity_id}/receivable_accounts/#{id}/undo_receivement.json", faturamento
+  def self.desfaz_recebimento_de_conta_a_receber(id, entity_id)
+    lput "/entities/#{entity_id}/receivable_accounts/#{id}/undo_receivement.json", {}
   end
 end
