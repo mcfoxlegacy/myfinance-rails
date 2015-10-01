@@ -3,7 +3,7 @@ describe 'Manipulando Contas a Receber', type: :feature do
   require 'myfinance'
 
   it 'Se a cav não der acesso, ja devemos dar erro na chamado do setup' do
-    expect { Myfinance.setup('nowaythiskeucanwork') }.to raise_error
+    expect { Myfinance.setup('nowaythiskeucanwork') }.to raise_error(RuntimeError)
   end
 
   it 'Se a cav não der acesso, ja devemos dar erro na chamado do setup' do
