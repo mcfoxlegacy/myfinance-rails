@@ -4,12 +4,9 @@ module Myfinance
     cria_conta_a_receber(entity_id,faturamento)
   end
 
-  def self.cria_conta_a_receber(entity_id,faturamento)
-    receivable_account = {
-        'receivable_account' => faturamento
-    }
-    response = lpost "/entities/#{entity_id}/receivable_accounts.json", receivable_account
-    response
+  def self.cria_conta_a_receber(entity_id, faturamento)
+    lpost "/entities/#{entity_id}/receivable_accounts.json",
+          parametro_conta_a_receber(faturamento)
   end
 
   def self.conta_a_receber(id, entity_id)
@@ -25,10 +22,19 @@ module Myfinance
   end
 
   def self.recebe_conta_a_receber(id, entity_id, faturamento)
-    lput "/entities/#{entity_id}/receivable_accounts/#{id}/receive.json", faturamento
+    lput "/entities/#{entity_id}/receivable_accounts/#{id}/receive.json",
+         parametro_conta_a_receber(faturamento)
   end
 
   def self.desfaz_recebimento_de_conta_a_receber(id, entity_id)
     lput "/entities/#{entity_id}/receivable_accounts/#{id}/undo_receivement.json", {}
   end
+
+  def self.parametro_conta_a_receber(faturamento)
+    receivable_account = {
+      'receivable_account' => faturamento
+    }
+  end
+
+  private_class_method :parametro_conta_a_receber
 end

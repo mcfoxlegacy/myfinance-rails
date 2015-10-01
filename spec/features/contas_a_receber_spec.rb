@@ -84,7 +84,7 @@ describe 'Manipulando Contas a Receber', type: :feature do
   it "#recebe_conta_a_receber" do
     conta_a_receber_parameters_double = double('conta_a_receber_parameters')
     conta_a_receber_double = double('conta_a_receber')
-    expect(Myfinance).to receive(:lput).once.with("/entities/2/receivable_accounts/1/receive.json", conta_a_receber_parameters_double).and_return conta_a_receber_double
+    expect(Myfinance).to receive(:lput).once.with("/entities/2/receivable_accounts/1/receive.json", 'receivable_account' => conta_a_receber_parameters_double).and_return conta_a_receber_double
     expect(Myfinance.recebe_conta_a_receber(1, 2, conta_a_receber_parameters_double)).to eql(conta_a_receber_double)
   end
 
