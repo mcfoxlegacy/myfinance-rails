@@ -81,4 +81,18 @@ describe 'Manipulando Contas a Receber', type: :feature do
     expect(Myfinance).to receive(:lput).once.with("/entities/2/receivable_accounts/1.json", conta_a_receber_parameters_double).and_return conta_a_receber_double
     expect(Myfinance.altera_conta_a_receber(1, 2, conta_a_receber_parameters_double)).to eql(conta_a_receber_double)
   end
+
+  it "#recebe_conta_a_receber" do
+    double conta_a_receber_parameters_double = double('conta_a_receber_parameters')
+    double conta_a_receber_double = double('conta_a_receber')
+    expect(Myfinance).to receive(:lput).once.with("/entities/2/receivable_accounts/1/receive.json", conta_a_receber_parameters_double).and_return conta_a_receber_double
+    expect(Myfinance.recebe_conta_a_receber(1, 2, conta_a_receber_parameters_double)).to eql(conta_a_receber_double)
+  end
+
+  it "#desfaz_recebimento_de_conta_a_receber" do
+    double conta_a_receber_parameters_double = double('conta_a_receber_parameters')
+    double conta_a_receber_double = double('conta_a_receber')
+    expect(Myfinance).to receive(:lput).once.with("/entities/2/receivable_accounts/1/undo_receivement.json", conta_a_receber_parameters_double).and_return conta_a_receber_double
+    expect(Myfinance.desfaz_recebimento_de_conta_a_receber(1, 2, conta_a_receber_parameters_double)).to eql(conta_a_receber_double)
+  end
 end
