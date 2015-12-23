@@ -42,7 +42,13 @@ module Myfinance
   end
 
   def self.classification_centers
-    lget '/classification_centers.json'
+    centers = []
+    for page in 1..50
+      response = lget "/classification_centers.json?page=#{page}"
+      break if response.empty?
+      centers = centers.concat response
+    end
+    centers
   end
 end
 
