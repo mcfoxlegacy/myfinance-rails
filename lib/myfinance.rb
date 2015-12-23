@@ -7,6 +7,7 @@ require 'myfinance/imposto'
 require 'myfinance/categoria'
 require 'myfinance/centro_receita_custo'
 require 'myfinance/account'
+require 'myfinance/conta_deposito'
 require 'json'
 
 module Myfinance

@@ -83,8 +83,9 @@ describe "Manipulando Centros de Receita e Custo", type: :feature do
   end
 
   it "#classification_centers" do
-    double classification_centers_double = double("classification_centers_double")
-    expect(Myfinance).to receive(:lget).once.with("/classification_centers.json").and_return classification_centers_double
-    expect(Myfinance.classification_centers).to eql(classification_centers_double)
+    double classification_center_double = double("classification_center_double")
+    expect(Myfinance).to receive(:lget).once.with("/classification_centers.json?page=1").and_return [classification_center_double]
+    expect(Myfinance).to receive(:lget).once.with("/classification_centers.json?page=2").and_return []
+    expect(Myfinance.classification_centers).to eql([classification_center_double])
   end
 end
