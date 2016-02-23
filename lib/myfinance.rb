@@ -8,6 +8,7 @@ require 'myfinance/categoria'
 require 'myfinance/centro_receita_custo'
 require 'myfinance/account'
 require 'myfinance/conta_deposito'
+require 'myfinance/webhook'
 require 'json'
 
 module Myfinance
