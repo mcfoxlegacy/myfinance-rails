@@ -1,11 +1,13 @@
 module Myfinance
-
   def self.cria_webhook(webhook)
-    lpost "/webhooks.json", webhook
+    lpost "/integrations/webhooks.json", webhook
   end
 
   def self.webhooks
-    lget "/webhooks.json"
+    lget "/integrations/webhooks.json"
+  end
+
+  def self.apaga_webhook(id)
+    ldelete "/integrations/webhooks/#{id}.json"
   end
 end
-
