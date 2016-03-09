@@ -1,10 +1,10 @@
 module Myfinance
 
-  def self.pessoa_id(cnpj)
+  def self.pessoa_id(cnpj_ou_nome)
     @everyone ||= all_people
     mid = nil
     @everyone.each do | pessoa |
-      if pessoa['federation_subscription_number_only_numbers'] == cnpj  or pessoa['federation_subscription_number'] == cnpj
+      if pessoa['federation_subscription_number_only_numbers'] == cnpj_ou_nome or pessoa['federation_subscription_number'] == cnpj_ou_nome or pessoa['name'] == cnpj_ou_nome
         mid = pessoa['id']
         break
       end
@@ -25,8 +25,8 @@ module Myfinance
     everyone
   end
 
-  def self.pessoa(cnpj)
-    mid = pessoa_id(cnpj)
+  def self.pessoa(cnpj_ou_nome)
+    mid = pessoa_id(cnpj_ou_nome)
     response = lget "/people/#{mid}.json"
     response['person'] if response
   end
