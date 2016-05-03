@@ -4,7 +4,7 @@ module Myfinance
     @everyone ||= all_people
     mid = nil
     @everyone.each do | pessoa |
-      if pessoa['federation_subscription_number_only_numbers'] == cnpj_ou_nome or pessoa['federation_subscription_number'] == cnpj_ou_nome or pessoa['name'] == cnpj_ou_nome
+      if pessoa['federation_subscription_number_only_numbers'] == cnpj_ou_nome or pessoa['federation_subscription_number'] == cnpj_ou_nome or pessoa['name'].casecmp(cnpj_ou_nome) == 0
         mid = pessoa['id']
         break
       end

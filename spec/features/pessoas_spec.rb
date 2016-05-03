@@ -55,6 +55,12 @@ describe 'Manipulando Pessoas', type: :feature do
     expect(id).to_not be_nil
   end
 
+  it 'Se procurar por nome cadastrado, mas em case diferente, deve voltar id' do
+    Myfinance.setup('2acecbb483842ebbfb2c638070bf019b70e757190166d277')
+    id = Myfinance.pessoa_id('CiClAnO')
+    expect(id).to_not be_nil
+  end
+
   it 'Se procurar por nome não cadastrado, deve voltar id nulo' do
     Myfinance.setup('2acecbb483842ebbfb2c638070bf019b70e757190166d277')
     id = Myfinance.pessoa_id('Ciclano Ciclano')
