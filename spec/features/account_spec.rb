@@ -31,6 +31,7 @@ describe 'Account', type: :feature do
     describe "not informed" do
       before do
         expect(Myfinance).to receive(:accounts).and_return response_double
+        expect(Myfinance).to receive(:get_account_id).and_return nil
         Myfinance.setup "123456", false
       end
       it "get" do
