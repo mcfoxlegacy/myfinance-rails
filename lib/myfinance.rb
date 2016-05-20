@@ -25,13 +25,13 @@ module Myfinance
     end
     base_uri @endpoint
     @token = token
-    @account_id = account_id
     # testo com uma chamada simples
     response = accounts
     # Resposta deve ser um array de hashes
     unless response.code == 200
       raise "Erro ao inicializar a API do MyFinance: #{response.code} : #{response.parsed_response}"
     end
+    @account_id = get_account_id(account_id, response)
   end
 
   private
@@ -83,6 +83,11 @@ module Myfinance
 
   def self.add_account_id(options)
     options[:headers]['ACCOUNT_ID'] = @account_id.to_s if @account_id
+  end
+
+  def self.get_account_id(account_id, accounts_response)
+    return account_id unless account_id.nil?
+    accounts_response.first["account"]["id"]
   end
 end
 
