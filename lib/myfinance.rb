@@ -86,7 +86,7 @@ module Myfinance
   end
 
   def self.get_account_id(account_id, accounts_response)
-    return account_id unless account_id.nil?
+    return account_id unless (account_id.nil? or account_id == "")
     accounts_response.first["account"]["id"]
   end
 end
