@@ -37,39 +37,75 @@ describe 'Manipulando Pessoas', type: :feature do
 
   end
 
-  it 'Se procurar por um cnpj não cadastrado, deve voltar nulo' do
-    Myfinance.setup('2acecbb483842ebbfb2c638070bf019b70e757190166d277')
-    id = Myfinance.pessoa_id('67977504999999')
-    expect(id).to be_nil
+  describe "#pessoa_id" do
+    it 'Se procurar por um cnpj não cadastrado, deve voltar nulo' do
+      Myfinance.setup('2acecbb483842ebbfb2c638070bf019b70e757190166d277')
+      id = Myfinance.pessoa_id('67977504999999')
+      expect(id).to be_nil
+    end
+
+    it 'Se procurar por um cnpj cadastrado, deve voltar id' do
+      Myfinance.setup('2acecbb483842ebbfb2c638070bf019b70e757190166d277')
+      id = Myfinance.pessoa_id('27206831000170')
+      expect(id).to_not be_nil
+    end
+
+    it 'Se procurar por nome cadastrado, deve voltar id' do
+      Myfinance.setup('2acecbb483842ebbfb2c638070bf019b70e757190166d277')
+      id = Myfinance.pessoa_id('Ciclano')
+      expect(id).to_not be_nil
+    end
+
+    it 'Se procurar por nome cadastrado, mas em case diferente, deve voltar id' do
+      Myfinance.setup('2acecbb483842ebbfb2c638070bf019b70e757190166d277')
+      id = Myfinance.pessoa_id('CiClAnO')
+      expect(id).to_not be_nil
+    end
+
+    it 'Se procurar por nome não cadastrado, deve voltar id nulo' do
+      Myfinance.setup('2acecbb483842ebbfb2c638070bf019b70e757190166d277')
+      id = Myfinance.pessoa_id('Ciclano Ciclano')
+      expect(id).to be_nil
+    end
   end
 
-  it 'Se procurar por um cnpj cadastrado, deve voltar id' do
-    Myfinance.setup('2acecbb483842ebbfb2c638070bf019b70e757190166d277')
-    id = Myfinance.pessoa_id('27206831000170')
-    expect(id).to_not be_nil
+  describe "#pessoa" do
+    let!(:person_double) { double("person") }
+    it "Retorna pessoa quando encontra cnpj" do
+      expect(Myfinance).to receive(:pesquisa_pessoa).with("federation_subscription_number", "67977504000137").and_return person_double
+      expect(Myfinance.pessoa("67977504000137")).to eql person_double
+    end
+    it "Retorna pessoa quando encontra nome" do
+      expect(Myfinance).to receive(:pesquisa_pessoa).with("federation_subscription_number", "nome").and_return nil
+      expect(Myfinance).to receive(:pesquisa_pessoa).with("name", "nome").and_return person_double
+      expect(Myfinance.pessoa("nome")).to eql person_double
+    end
+    it "Retorna nil quando não encontra pessoa" do
+      expect(Myfinance).to receive(:pesquisa_pessoa).with("federation_subscription_number", "nome").and_return nil
+      expect(Myfinance).to receive(:pesquisa_pessoa).with("name", "nome").and_return nil
+      expect(Myfinance.pessoa("nome")).to be_nil
+    end
   end
 
-  it 'Se procurar por nome cadastrado, deve voltar id' do
-    Myfinance.setup('2acecbb483842ebbfb2c638070bf019b70e757190166d277')
-    id = Myfinance.pessoa_id('Ciclano')
-    expect(id).to_not be_nil
-  end
-
-  it 'Se procurar por nome cadastrado, mas em case diferente, deve voltar id' do
-    Myfinance.setup('2acecbb483842ebbfb2c638070bf019b70e757190166d277')
-    id = Myfinance.pessoa_id('CiClAnO')
-    expect(id).to_not be_nil
-  end
-
-  it 'Se procurar por nome não cadastrado, deve voltar id nulo' do
-    Myfinance.setup('2acecbb483842ebbfb2c638070bf019b70e757190166d277')
-    id = Myfinance.pessoa_id('Ciclano Ciclano')
-    expect(id).to be_nil
-  end
-
-  it 'Se procurar por um cnpj cadastrado de outra conta, não deve voltar id' do
-    Myfinance.setup('2acecbb483842ebbfb2c638070bf019b70e757190166d277', false, 1)
-    id = Myfinance.pessoa_id('27206831000170')
-    expect(id).to be_nil
+  describe "#pesquisa_pessoa" do
+    before do
+      Myfinance.setup('2acecbb483842ebbfb2c638070bf019b70e757190166d277')
+    end
+    it "retorna pessoal quando encontra cnpj com pontuação" do
+      pessoa = Myfinance.pesquisa_pessoa("federation_subscription_number", "67.977.504/0001-37")
+      expect(pessoa["id"]).to eql 192058
+    end
+    it "retorna pessoal quando encontra cnpj sem pontuação" do
+      pessoa = Myfinance.pesquisa_pessoa("federation_subscription_number", "67977504000137")
+      expect(pessoa["id"]).to eql 192058
+    end
+    it "retorna pessoal quando encontra nome" do
+      pessoa = Myfinance.pesquisa_pessoa("name", "AGROPECUARIA POTENZA LTDA.")
+      expect(pessoa["id"]).to eql 192058
+    end
+    it "retorna nil quando não encontra cnpj" do
+      pessoa = Myfinance.pesquisa_pessoa("name", "AGROPECUARIA POTENZA")
+      expect(pessoa).to be_nil
+    end
   end
 end
