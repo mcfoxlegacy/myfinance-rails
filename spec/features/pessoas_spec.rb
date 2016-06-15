@@ -72,17 +72,17 @@ describe 'Manipulando Pessoas', type: :feature do
   describe "#pessoa" do
     let!(:person_double) { double("person") }
     it "Retorna pessoa quando encontra cnpj" do
-      expect(Myfinance).to receive(:pesquisa_pessoa).with("federation_subscription_number", "67977504000137").and_return person_double
+      expect(Myfinance).to receive(:pesquisa_pessoa).with("federation_subscription_number_equals", "67977504000137").and_return person_double
       expect(Myfinance.pessoa("67977504000137")).to eql person_double
     end
     it "Retorna pessoa quando encontra nome" do
-      expect(Myfinance).to receive(:pesquisa_pessoa).with("federation_subscription_number", "nome").and_return nil
-      expect(Myfinance).to receive(:pesquisa_pessoa).with("name", "nome").and_return person_double
+      expect(Myfinance).to receive(:pesquisa_pessoa).with("federation_subscription_number_equals", "nome").and_return nil
+      expect(Myfinance).to receive(:pesquisa_pessoa).with("name_equals", "nome").and_return person_double
       expect(Myfinance.pessoa("nome")).to eql person_double
     end
     it "Retorna nil quando não encontra pessoa" do
-      expect(Myfinance).to receive(:pesquisa_pessoa).with("federation_subscription_number", "nome").and_return nil
-      expect(Myfinance).to receive(:pesquisa_pessoa).with("name", "nome").and_return nil
+      expect(Myfinance).to receive(:pesquisa_pessoa).with("federation_subscription_number_equals", "nome").and_return nil
+      expect(Myfinance).to receive(:pesquisa_pessoa).with("name_equals", "nome").and_return nil
       expect(Myfinance.pessoa("nome")).to be_nil
     end
   end
@@ -92,19 +92,19 @@ describe 'Manipulando Pessoas', type: :feature do
       Myfinance.setup('2acecbb483842ebbfb2c638070bf019b70e757190166d277')
     end
     it "retorna pessoal quando encontra cnpj com pontuação" do
-      pessoa = Myfinance.pesquisa_pessoa("federation_subscription_number", "67.977.504/0001-37")
+      pessoa = Myfinance.pesquisa_pessoa("federation_subscription_number_equals", "67.977.504/0001-37")
       expect(pessoa["id"]).to eql 192058
     end
     it "retorna pessoal quando encontra cnpj sem pontuação" do
-      pessoa = Myfinance.pesquisa_pessoa("federation_subscription_number", "67977504000137")
+      pessoa = Myfinance.pesquisa_pessoa("federation_subscription_number_equals", "67977504000137")
       expect(pessoa["id"]).to eql 192058
     end
     it "retorna pessoal quando encontra nome" do
-      pessoa = Myfinance.pesquisa_pessoa("name", "AGROPECUARIA POTENZA LTDA.")
+      pessoa = Myfinance.pesquisa_pessoa("name_equals", "AGROPECUARIA POTENZA LTDA.")
       expect(pessoa["id"]).to eql 192058
     end
     it "retorna nil quando não encontra cnpj" do
-      pessoa = Myfinance.pesquisa_pessoa("name", "AGROPECUARIA POTENZA")
+      pessoa = Myfinance.pesquisa_pessoa("name_equals", "AGROPECUARIA POTENZA")
       expect(pessoa).to be_nil
     end
   end

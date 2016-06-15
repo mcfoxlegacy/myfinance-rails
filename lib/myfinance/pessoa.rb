@@ -6,8 +6,8 @@ module Myfinance
   end
 
   def self.pessoa(cnpj_ou_nome)
-    person = pesquisa_pessoa("federation_subscription_number", cnpj_ou_nome)
-    person ||= pesquisa_pessoa("name", cnpj_ou_nome)
+    person = pesquisa_pessoa("federation_subscription_number_equals", cnpj_ou_nome)
+    person ||= pesquisa_pessoa("name_equals", cnpj_ou_nome)
     person
   end
 
