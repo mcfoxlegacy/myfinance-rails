@@ -2,6 +2,7 @@ require 'httparty'
 require 'myfinance/version'
 require 'myfinance/entidade'
 require 'myfinance/pessoa'
+require 'myfinance/conta_a_pagar'
 require 'myfinance/conta_a_receber'
 require 'myfinance/imposto'
 require 'myfinance/categoria'
@@ -22,6 +23,7 @@ module Myfinance
       @endpoint = 'https://app.myfinance.com.br'
     else
       @endpoint = 'https://sandbox.myfinance.com.br'
+      # @endpoint = 'https://app.myfinance.com.br'
     end
     base_uri @endpoint
     @token = token
@@ -32,6 +34,10 @@ module Myfinance
       raise "Erro ao inicializar a API do MyFinance: #{response.code} : #{response.parsed_response}"
     end
     @account_id = get_account_id(account_id, response)
+  end
+
+  def account_id
+    @account_id
   end
 
   private
