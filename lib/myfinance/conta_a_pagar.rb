@@ -5,9 +5,9 @@ module Myfinance
     cria_conta_a_pagar(entity_id,faturamento)
   end
 
-  def self.busca_conta_a_pagar(entity_id, nfe_id)
+  def self.busca_conta_a_pagar(entity_id, nfe_id, search_field = 'description')
     raise 'Enitidade não informada!' unless entity_id
-    lget "/entities/#{entity_id}/payable_accounts.json?search[description_like]=#{nfe_id}"
+    lget "/entities/#{entity_id}/payable_accounts.json?search[#{search_field}_like]=#{nfe_id}"
   end
 
   def self.cria_conta_a_pagar(entity_id,pagamento)
