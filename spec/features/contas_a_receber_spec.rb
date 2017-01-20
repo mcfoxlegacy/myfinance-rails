@@ -60,6 +60,12 @@ describe 'Manipulando Contas a Receber', type: :feature do
 
     conta_a_receber = Myfinance.cria_conta_a_receber(entidade_id, faturamento)
     expect(conta_a_receber['receivable_account']).to_not be_nil
+
+    # devo poder anexar um arquivo
+    cr_id = conta_a_receber['receivable_account']['id']
+    anexo = Myfinance.anexa_arquivo(entidade_id, cr_id, 'teste.txt', 'Conteúdo do Arquivo de Teste')
+    expect(anexo.include?('Ops! Erro no Servidor')).to eql(false)
+
   end
 
   it '.conta_a_receber' do

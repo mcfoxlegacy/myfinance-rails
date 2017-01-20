@@ -1,4 +1,5 @@
 require 'httparty'
+require 'httmultiparty'
 require 'myfinance/version'
 require 'myfinance/entidade'
 require 'myfinance/pessoa'
@@ -10,11 +11,13 @@ require 'myfinance/centro_receita_custo'
 require 'myfinance/account'
 require 'myfinance/conta_deposito'
 require 'myfinance/webhook'
+require 'myfinance/anexo'
 require 'json'
 
 module Myfinance
 
-  include HTTParty
+  # include HTTParty
+  include HTTMultiParty
 
   attr_accessor :token, :endpoint, :account_id
 
