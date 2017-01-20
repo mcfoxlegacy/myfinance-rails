@@ -10,7 +10,8 @@ describe 'Manipulando Contas a Receber', type: :feature do
   end
 
   it 'deve poder criar uma conta a receber para uma entidade e um cliente' do
-    Myfinance.setup('2acecbb483842ebbfb2c638070bf019b70e757190166d277')
+    token = '2acecbb483842ebbfb2c638070bf019b70e757190166d277'
+    Myfinance.setup(token)
 
     # entidade_id = Myfinance.entidade_id('06604529878')
     entidade_id = Myfinance.entidade_id('11.023.029/0001-05')
@@ -62,9 +63,9 @@ describe 'Manipulando Contas a Receber', type: :feature do
     expect(conta_a_receber['receivable_account']).to_not be_nil
 
     # devo poder anexar um arquivo
-    cr_id = conta_a_receber['receivable_account']['id']
-    anexo = Myfinance.anexa_arquivo(entidade_id, cr_id, 'teste.txt', 'Conteúdo do Arquivo de Teste')
-    expect(anexo.include?('Ops! Erro no Servidor')).to eql(false)
+    # cr_id = conta_a_receber['receivable_account']['id']
+    # anexo = Myfinance.anexa_arquivo(entidade_id, cr_id, 'teste.txt', 'Conteúdo do Arquivo de Teste')
+    # expect(anexo.include?('Ops! Erro no Servidor')).to eql(false)
 
   end
 

@@ -34,7 +34,7 @@ module Myfinance
     response = accounts
     # Resposta deve ser um array de hashes
     unless response.code == 200
-      raise "Erro ao inicializar a API do MyFinance: #{response.code} : #{response.parsed_response}"
+      raise 'Erro ao inicializar a API do MyFinance: #{response.code} : #{response.parsed_response}'
     end
     @account_id = get_account_id(account_id, response)
   end
@@ -44,6 +44,11 @@ module Myfinance
   end
 
   private
+
+  def self.header_info
+    # { 'Content-Type' => 'application/json', 'Accept' => 'application/json' }
+    { 'Content-Type' => 'application/json' }
+  end
 
   def self.lget(url)
     options = {
@@ -69,7 +74,7 @@ module Myfinance
     options = {
         :basic_auth => {:username => @token, :password => 'x'},
         :body => post_data.to_json,
-        :headers => { 'Content-Type' => 'application/json' }
+        :headers => header_info
     }
     add_account_id options
     response = put url, options
@@ -95,8 +100,8 @@ module Myfinance
   end
 
   def self.get_account_id(account_id, accounts_response)
-    return account_id unless (account_id.nil? or account_id == "")
-    accounts_response.first["account"]["id"]
+    return account_id unless (account_id.nil? or account_id == '')
+    accounts_response.first['account']['id']
   end
 end
 
