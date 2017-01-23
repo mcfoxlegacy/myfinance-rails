@@ -24,7 +24,9 @@ module Myfinance
   # se o usuario tiver mais de um account e não informarmos o account id,
   # ele pega o primeiro
   # se tiver mais de um, precisamos informar
-  def self.setup(token, production=false, account_id=nil)
+  def self.setup(token, production=false, account_id=nil, logger=nil)
+    logger(logger, :info, :curl) if logger
+
     if production
       @endpoint = 'https://app.myfinance.com.br'
     else
@@ -69,7 +71,6 @@ module Myfinance
         :headers => header_info
     }
     add_account_id options
-    # puts options.inspect
     response = post url, options
     response
   end
@@ -125,4 +126,3 @@ module Myfinance
     accounts_response.first['account']['id']
   end
 end
-
