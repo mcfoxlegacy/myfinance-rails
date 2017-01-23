@@ -10,13 +10,15 @@ describe 'Manipulando Contas a Receber', type: :feature do
   end
 
   it 'deve poder criar uma conta a receber para uma entidade e um cliente' do
-    Myfinance.setup('2acecbb483842ebbfb2c638070bf019b70e757190166d277')
+    token = '2acecbb483842ebbfb2c638070bf019b70e757190166d277'
+    Myfinance.setup(token)
 
     # entidade_id = Myfinance.entidade_id('06604529878')
     entidade_id = Myfinance.entidade_id('11.023.029/0001-05')
     cliente_id = Myfinance.pessoa_id('27.206.831/0001-70')
     categoria_id = Myfinance.categoria_id('Alimentação / Restaurantes')
     centro_de_receita_id = Myfinance.centro_de_receita_id('Projetos')
+
 
     faturamento = {
         'entity_id' => entidade_id,
@@ -56,10 +58,16 @@ describe 'Manipulando Contas a Receber', type: :feature do
         ]
       }
     conta_a_receber = Myfinance.cria_conta_a_receber_entidade('Minhas Finanças', faturamento)
-    expect(conta_a_receber['receivable_account']).to_not be_nil
+    expect(conta_a_receber.code).to eql(201)
 
     conta_a_receber = Myfinance.cria_conta_a_receber(entidade_id, faturamento)
-    expect(conta_a_receber['receivable_account']).to_not be_nil
+    expect(conta_a_receber.code).to eql(201)
+
+    # devo poder anexar um arquivo
+    cr_id = conta_a_receber['receivable_account']['id']
+    anexo = Myfinance.anexa_arquivo(entidade_id, cr_id, 'teste.txt', '********** Conteúdo do Arquivo de Teste *************')
+    expect(anexo.code).to eql(201)
+
   end
 
   it '.conta_a_receber' do
