@@ -19,6 +19,7 @@ describe 'Manipulando Contas a Receber', type: :feature do
     categoria_id = Myfinance.categoria_id('Alimentação / Restaurantes')
     centro_de_receita_id = Myfinance.centro_de_receita_id('Projetos')
 
+
     faturamento = {
         'entity_id' => entidade_id,
         'due_date' => (Date.today + 30),
@@ -57,15 +58,15 @@ describe 'Manipulando Contas a Receber', type: :feature do
         ]
       }
     conta_a_receber = Myfinance.cria_conta_a_receber_entidade('Minhas Finanças', faturamento)
-    expect(conta_a_receber['receivable_account']).to_not be_nil
+    expect(conta_a_receber.code).to eql(201)
 
     conta_a_receber = Myfinance.cria_conta_a_receber(entidade_id, faturamento)
-    expect(conta_a_receber['receivable_account']).to_not be_nil
+    expect(conta_a_receber.code).to eql(201)
 
     # devo poder anexar um arquivo
-    # cr_id = conta_a_receber['receivable_account']['id']
-    # anexo = Myfinance.anexa_arquivo(entidade_id, cr_id, 'teste.txt', 'Conteúdo do Arquivo de Teste')
-    # expect(anexo.include?('Ops! Erro no Servidor')).to eql(false)
+    cr_id = conta_a_receber['receivable_account']['id']
+    anexo = Myfinance.anexa_arquivo(entidade_id, cr_id, 'teste.txt', '********** Conteúdo do Arquivo de Teste *************')
+    expect(anexo.code).to eql(201)
 
   end
 

@@ -46,14 +46,14 @@ module Myfinance
   private
 
   def self.header_info
-    # { 'Content-Type' => 'application/json', 'Accept' => 'application/json' }
-    { 'Content-Type' => 'application/json' }
+    { 'Content-Type' => 'application/json', 'Accept' => 'application/json' }
+    # { 'Content-Type' => 'application/json' }
   end
 
   def self.lget(url)
     options = {
         :basic_auth => {:username => @token, :password => 'x'},
-        :headers => { 'Content-Type' => 'application/json' }
+        :headers => header_info
     }
     add_account_id options
     get url, options
@@ -63,12 +63,27 @@ module Myfinance
     options = {
         :basic_auth => {:username => @token, :password => 'x'},
         :body => post_data.to_json,
-        :headers => { 'Content-Type' => 'application/json' }
+        :headers => header_info
     }
     add_account_id options
+    puts options.inspect
     response = post url, options
     response
   end
+
+  def self.multi_party_post(url,post_data)
+    options = {
+        :basic_auth => {:username => @token, :password => 'x'},
+        :body => post_data,
+        :headers => header_info,
+        :detect_mime_type => true
+    }
+    add_account_id options
+    puts options.inspect
+    response = post url, options
+    response
+  end
+
 
   def self.lput(url,post_data)
     options = {
@@ -84,7 +99,7 @@ module Myfinance
   def self.ldelete(url)
     options = {
         :basic_auth => {:username => @token, :password => 'x'},
-        :headers => { 'Content-Type' => 'application/json' }
+        :headers => header_info
     }
     add_account_id options
     response = delete url, options
@@ -100,7 +115,7 @@ module Myfinance
   end
 
   def self.get_account_id(account_id, accounts_response)
-    return account_id unless (account_id.nil? or account_id == '')
+    return account_id if account_id
     accounts_response.first['account']['id']
   end
 end
