@@ -21,7 +21,9 @@ module Myfinance
 
   attr_accessor :token, :endpoint, :account_id
 
-  def self.setup(token, production=false, account_id=nil)
+  def self.setup(token, production=false, account_id=nil, logger=nil)
+    logger(logger, :info, :curl) if logger
+
     if production
       @endpoint = 'https://app.myfinance.com.br'
     else
@@ -104,4 +106,3 @@ module Myfinance
     accounts_response.first['account']['id']
   end
 end
-
