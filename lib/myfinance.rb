@@ -21,6 +21,9 @@ module Myfinance
 
   attr_accessor :token, :endpoint, :account_id
 
+  # se o usuario tiver mais de um account e não informarmos o account id,
+  # ele pega o primeiro
+  # se tiver mais de um, precisamos informar
   def self.setup(token, production=false, account_id=nil)
     if production
       @endpoint = 'https://app.myfinance.com.br'
@@ -46,8 +49,8 @@ module Myfinance
   private
 
   def self.header_info
-    { 'Content-Type' => 'application/json', 'Accept' => 'application/json' }
-    # { 'Content-Type' => 'application/json' }
+    # { 'Content-Type' => 'application/json', 'Accept' => 'application/json' }
+    { 'Content-Type' => 'application/json' }
   end
 
   def self.lget(url)
@@ -66,7 +69,7 @@ module Myfinance
         :headers => header_info
     }
     add_account_id options
-    puts options.inspect
+    # puts options.inspect
     response = post url, options
     response
   end
@@ -75,11 +78,11 @@ module Myfinance
     options = {
         :basic_auth => {:username => @token, :password => 'x'},
         :body => post_data,
-        :headers => header_info,
+        :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json' },
         :detect_mime_type => true
     }
     add_account_id options
-    puts options.inspect
+    # puts options.inspect
     response = post url, options
     response
   end
@@ -116,6 +119,9 @@ module Myfinance
 
   def self.get_account_id(account_id, accounts_response)
     return account_id if account_id
+    qtd_de_contas =  accounts_response.size
+    raise 'Esse usuário não tem uma Conta associada ao seu usuário, por favor defina qual conta usar no acesso da API' if qtd_de_contas == 0
+    raise 'Esse usuário tem mais de uma Conta associada ao seu usuário, por favor defina qual conta usar no acesso da API' if qtd_de_contas > 1
     accounts_response.first['account']['id']
   end
 end

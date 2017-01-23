@@ -16,8 +16,8 @@ module Myfinance
       }
     }
     response = multi_party_post( "/entities/#{entity_id}/attachments",post_data)
-    puts attached_file.path
-    puts response
+    # puts attached_file.path
+    # puts response
 
     attached_file.close
     attached_file.unlink
