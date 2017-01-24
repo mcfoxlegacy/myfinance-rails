@@ -24,7 +24,7 @@ module Myfinance
   # se o usuario tiver mais de um account e não informarmos o account id,
   # ele pega o primeiro
   # se tiver mais de um, precisamos informar
-  def self.setup(token, production=false, account_id=nil, logger=nil)
+  def self.setup(token, production=false, account=nil, logger=nil)
     logger(logger, :info, :curl) if logger
 
     if production
@@ -41,11 +41,23 @@ module Myfinance
     unless response.code == 200
       raise 'Erro ao inicializar a API do MyFinance: #{response.code} : #{response.parsed_response}'
     end
-    @account_id = get_account_id(account_id, response)
+    if account.is_a?(String)
+      @account_id = account_id(account)
+    else
+      @account_id = get_account_id(account, response)
+    end
   end
 
   def account_id
     @account_id
+  end
+
+  def set_account_id(account_id)
+    @account_id = account_id
+  end
+
+  def set_account_id_by_name(account_name)
+    @account_id = Myfinance.account_id(account_name)
   end
 
   private
