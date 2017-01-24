@@ -65,7 +65,7 @@ describe 'Manipulando Contas a Receber', type: :feature do
 
     # devo poder anexar um arquivo
     cr_id = conta_a_receber['receivable_account']['id']
-    anexo = Myfinance.anexa_arquivo(entidade_id, cr_id, 'teste.txt', '********** Conteúdo do Arquivo de Teste *************')
+    anexo = Myfinance.cria_e_anexa_arquivo(entidade_id, cr_id, 'teste.txt', '********** Conteúdo do Arquivo de Teste *************')
     expect(anexo.code).to eql(201)
 
   end
