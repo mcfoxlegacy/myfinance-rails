@@ -39,7 +39,7 @@ module Myfinance
     response = accounts
     # Resposta deve ser um array de hashes
     unless response.code == 200
-      raise 'Erro ao inicializar a API do MyFinance: #{response.code} : #{response.parsed_response}'
+      raise "Erro ao inicializar a API do MyFinance: #{response.code} : #{response.parsed_response}"
     end
     if account.is_a?(String)
       @account_id = account_id(account)
