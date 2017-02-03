@@ -15,6 +15,7 @@ module Myfinance
 
 
   def self.anexa_arquivo(entity_id, receivable_id, titulo, arquivo)
+    arquivo.rewind rescue nil
     post_data = { attachment: {
         attachment: arquivo,
         title: titulo,
