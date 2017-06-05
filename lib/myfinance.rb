@@ -41,10 +41,10 @@ module Myfinance
     unless response.code == 200
       raise "Erro ao inicializar a API do MyFinance: #{response.code} : #{response.parsed_response}"
     end
-    if account.is_a?(String)
+    if account and account.is_a?(String)
       @account_id = account_id(account)
-    else
-      @account_id = get_account_id(account, response)
+    # else
+    #   @account_id = get_account_id(account, response)
     end
   end
 
