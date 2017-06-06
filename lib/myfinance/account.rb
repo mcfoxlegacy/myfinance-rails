@@ -1,11 +1,11 @@
 module Myfinance
 
-  def self.account_id(nome)
+  def self.account_id(account_name)
     mid = nil
     available_accounts = accounts
     available_accounts.each do | item |
       item = item['account']
-      if item['name'] == nome
+      if item['name'] == account_name
         mid = item['id']
         break
       end
