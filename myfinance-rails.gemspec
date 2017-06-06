@@ -5,7 +5,7 @@ require 'myfinance/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'myfinance-rails'
-  spec.version       = Myfinance::VERSION
+  spec.version       = '0.5.2'
   spec.authors       = ['José Lopes Neto']
   spec.email         = ['jose.neto@taxweb.com.br']
   spec.summary       = %q{GEM para facilitar a uso da API do Myfinance em Aplicativos Rails}
