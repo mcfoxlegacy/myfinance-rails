@@ -5,12 +5,12 @@ require 'myfinance/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'myfinance-rails'
-  spec.version       = '0.5.2'
+  spec.version       = Myfinance::VERSION
   spec.authors       = ['José Lopes Neto']
   spec.email         = ['jose.neto@taxweb.com.br']
   spec.summary       = %q{GEM para facilitar a uso da API do Myfinance em Aplicativos Rails}
   spec.description   = %q{GEM para facilitar a uso da API do Myfinance em Aplicativos Rails usando HTTParty}
-  spec.homepage      = ''
+  spec.homepage      = 'http://wwww.taxweb.com.br'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -22,7 +22,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake', '~> 0'
   spec.add_development_dependency 'rspec', '~> 0'
   spec.add_dependency 'httparty','~> 0.13'
-  spec.add_dependency 'httmultiparty'
-
+  spec.add_dependency 'httmultiparty', '~> 0'
 
 end
